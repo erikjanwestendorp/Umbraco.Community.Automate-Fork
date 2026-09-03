@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Community.Automate.Skoda.Client;
-using Umbraco.Community.Automate.Skoda.Client.Generated;
 
 namespace Umbraco.Community.Automate.Skoda.Compose;
 
@@ -11,13 +10,10 @@ internal static class UmbracoBuilderExtensions
     {
         public IUmbracoBuilder AddSkodaAutomate()
         {
-            builder.Services.AddHttpClient("Skoda", client =>
+            builder.Services.AddHttpClient<ISkodaClient, SkodaClient>(client =>
             {
-                client.BaseAddress = new Uri(SkodaConstants.BaseUrl);
-                client.Timeout = TimeSpan.FromSeconds(30);
+                client.BaseAddress = new Uri("https://public.api.connect.skoda-auto.cz/");
             });
-
-            builder.Services.AddSingleton<ISkodaClientFactory, SkodaClientFactory>();
 
             return builder;
         }
