@@ -6,7 +6,7 @@ namespace Umbraco.Community.Automate.Skoda.Actions;
 
 [Action(
     "community.automate.skoda.getVehicleStatus",
-    "Get Vehicle Status ",
+    "Get Vehicle Status",
     Group = "Skoda",
     Icon = "icon-car",
     ConnectionTypeAlias = SkodaConstants.ConnectionTypeAlias)]
