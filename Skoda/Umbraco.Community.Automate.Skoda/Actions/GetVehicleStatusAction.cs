@@ -8,7 +8,7 @@ namespace Umbraco.Community.Automate.Skoda.Actions;
     "community.automate.skoda.getVehicleStatus",
     "Get Vehicle Status",
     Group = "Skoda",
-    Icon = "icon-car",
+    Icon = "icon-skoda",
     ConnectionTypeAlias = SkodaConstants.ConnectionTypeAlias)]
 public class GetVehicleStatusAction(ActionInfrastructure infrastructure, ISkodaClient client) : ActionBase<GetVehicleStatusSettings, GetVehicleStatusOutput>(infrastructure)
 {

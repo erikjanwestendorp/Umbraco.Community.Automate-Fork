@@ -10,4 +10,8 @@
 		<PackageReference Include="Umbraco.Automate.Core" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Umbraco.Community.Automate.Skoda.Assets\Umbraco.Community.Automate.Skoda.Assets.csproj" />
+	</ItemGroup>
+
 </Project>

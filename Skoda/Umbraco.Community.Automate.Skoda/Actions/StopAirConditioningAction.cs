@@ -8,7 +8,7 @@ namespace Umbraco.Community.Automate.Skoda.Actions;
     "community.automate.skoda.stopAirConditioning", 
     "Stop Air Conditioning", 
     Group = "Skoda", 
-    Icon = "icon-car", 
+    Icon = "icon-skoda", 
     ConnectionTypeAlias = SkodaConstants.ConnectionTypeAlias)]
 public sealed class StopAirConditioningAction(ActionInfrastructure infrastructure, ISkodaClient client) : ActionBase<StopAirConditioningSettings, VehicleCommandOutput>(infrastructure)
 {

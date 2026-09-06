@@ -8,7 +8,7 @@ namespace Umbraco.Community.Automate.Skoda.Actions;
     "community.automate.skoda.startCharging",
     "Start Charging",
     Group = "Skoda",
-    Icon = "icon-car",
+    Icon = "icon-skoda",
     ConnectionTypeAlias = SkodaConstants.ConnectionTypeAlias)]
 public sealed class StartChargingAction(ActionInfrastructure infrastructure, ISkodaClient client) : ActionBase<StartChargingSettings, VehicleCommandOutput>(infrastructure)
 {
