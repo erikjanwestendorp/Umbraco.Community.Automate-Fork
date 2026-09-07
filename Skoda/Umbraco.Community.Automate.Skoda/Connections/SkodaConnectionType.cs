@@ -25,9 +25,6 @@ public sealed class SkodaConnectionType(ConnectionTypeInfrastructure infrastruct
             return ConnectionValidationResult.Failure("API key and VIN must be provided.");
         }
 
-    
-        await skodaClient.GetVehicleAsync(skodaSettings.ApiKey, skodaSettings.Vin, cancellationToken);
-
         if (!skodaSettings.ValidateConnection)
         {
             return ConnectionValidationResult.Warning("The connection was not validated against the Škoda API.");
