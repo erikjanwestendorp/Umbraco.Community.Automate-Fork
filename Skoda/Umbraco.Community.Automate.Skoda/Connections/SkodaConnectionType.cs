@@ -26,14 +26,25 @@ public sealed class SkodaConnectionType(ConnectionTypeInfrastructure infrastruct
         }
 
     
-        await skodaClient.GetVehicleAsync(skodaSettings.ApiKey, skodaSettings.Vin);
+        await skodaClient.GetVehicleAsync(skodaSettings.ApiKey, skodaSettings.Vin, cancellationToken);
 
-        //using var response = await skodaClient.GetVehicleStatusAsync(
-        //    settings.ApiKey,
-        //    settings.Vin,
-        //    cancellationToken);
+        if (!skodaSettings.ValidateConnection)
+        {
+            return ConnectionValidationResult.Warning("The connection was not validated against the Škoda API.");
+        }
 
-        return ConnectionValidationResult.Success();
-        //return response.IsSuccessStatusCode;
+        try
+        {
+            await skodaClient.GetVehicleAsync(
+                skodaSettings.ApiKey,
+                skodaSettings.Vin,
+                cancellationToken);
+
+            return ConnectionValidationResult.Success();
+        }
+        catch (SkodaClientException ex)
+        {
+            return ConnectionValidationResult.Failure($"Unable to validate the Škoda connection: {ex.Message}");
+        }
     }
 }
