@@ -23,38 +23,57 @@ internal sealed class SkodaClient(HttpClient httpClient) : ISkodaClient
     }
 
     public Task StartChargingAsync(string apiKey, string vin, CancellationToken cancellationToken = default) =>
-        SendCommandAsync(apiKey, vin, "charging/start", null, cancellationToken);
+        SendCommandAsync(HttpMethod.Post, apiKey, vin, "charging/start", null, cancellationToken);
 
     public Task StopChargingAsync(string apiKey, string vin, CancellationToken cancellationToken = default) =>
-        SendCommandAsync(apiKey, vin, "charging/stop", null, cancellationToken);
+        SendCommandAsync(HttpMethod.Post, apiKey, vin, "charging/stop", null, cancellationToken);
+
+    public Task SetChargingLimitAsync(
+        string apiKey,
+        string vin,
+        int targetStateOfChargeInPercent,
+        CancellationToken cancellationToken = default) =>
+        SendCommandAsync(HttpMethod.Put, apiKey, vin, "charging/limit", new ChargingLimit(targetStateOfChargeInPercent), cancellationToken);
+
+    public Task SetChargeModeAsync(string apiKey, string vin, string chargeMode, CancellationToken cancellationToken = default) =>
+        SendCommandAsync(HttpMethod.Put, apiKey, vin, "charging/mode", new ChargeMode(chargeMode), cancellationToken);
+
+    public Task UpdateChargingProfileAsync(
+        string apiKey,
+        string vin,
+        long profileId,
+        ChargingProfile profile,
+        CancellationToken cancellationToken = default) =>
+        SendCommandAsync(HttpMethod.Put, apiKey, vin, $"charging-profiles/{profileId}", profile, cancellationToken);
 
     public Task StartAirConditioningAsync(
         string apiKey,
         string vin,
         StartAirConditioningConfiguration configuration,
         CancellationToken cancellationToken = default) =>
-        SendCommandAsync(apiKey, vin, "air-conditioning/start", configuration, cancellationToken);
+        SendCommandAsync(HttpMethod.Post, apiKey, vin, "air-conditioning/start", configuration, cancellationToken);
 
     public Task StopAirConditioningAsync(string apiKey, string vin, CancellationToken cancellationToken = default) =>
-        SendCommandAsync(apiKey, vin, "air-conditioning/stop", null, cancellationToken);
+        SendCommandAsync(HttpMethod.Post, apiKey, vin, "air-conditioning/stop", null, cancellationToken);
 
     public Task StartAuxiliaryHeatingAsync(
         string apiKey,
         string vin,
         StartAuxiliaryHeatingConfiguration configuration,
         CancellationToken cancellationToken = default) =>
-        SendCommandAsync(apiKey, vin, "auxiliary-heating/start", configuration, cancellationToken);
+        SendCommandAsync(HttpMethod.Post, apiKey, vin, "auxiliary-heating/start", configuration, cancellationToken);
 
     public Task StopAuxiliaryHeatingAsync(string apiKey, string vin, CancellationToken cancellationToken = default) =>
-        SendCommandAsync(apiKey, vin, "auxiliary-heating/stop", null, cancellationToken);
+        SendCommandAsync(HttpMethod.Post, apiKey, vin, "auxiliary-heating/stop", null, cancellationToken);
 
     public Task StartActiveVentilationAsync(string apiKey, string vin, CancellationToken cancellationToken = default) =>
-        SendCommandAsync(apiKey, vin, "active-ventilation/start", null, cancellationToken);
+        SendCommandAsync(HttpMethod.Post, apiKey, vin, "active-ventilation/start", null, cancellationToken);
 
     public Task StopActiveVentilationAsync(string apiKey, string vin, CancellationToken cancellationToken = default) =>
-        SendCommandAsync(apiKey, vin, "active-ventilation/stop", null, cancellationToken);
+        SendCommandAsync(HttpMethod.Post, apiKey, vin, "active-ventilation/stop", null, cancellationToken);
 
     private async Task SendCommandAsync<T>(
+        HttpMethod method,
         string apiKey,
         string vin,
         string command,
@@ -62,7 +81,7 @@ internal sealed class SkodaClient(HttpClient httpClient) : ISkodaClient
         CancellationToken cancellationToken)
     {
         using var request = CreateRequest(
-            HttpMethod.Post,
+            method,
             apiKey,
             $"api/v1/vehicles/{EscapeVin(vin)}/{command}");
 
@@ -75,12 +94,13 @@ internal sealed class SkodaClient(HttpClient httpClient) : ISkodaClient
     }
 
     private Task SendCommandAsync(
+        HttpMethod method,
         string apiKey,
         string vin,
         string command,
         object? body,
         CancellationToken cancellationToken) =>
-        SendCommandAsync<object>(apiKey, vin, command, body, cancellationToken);
+        SendCommandAsync<object>(method, apiKey, vin, command, body, cancellationToken);
 
     private static HttpRequestMessage CreateRequest(HttpMethod method, string apiKey, string url)
     {
