@@ -126,20 +126,22 @@ internal sealed class SkodaClient(HttpClient httpClient) : ISkodaClient
         if (response.IsSuccessStatusCode)
             return;
 
+        // Read the body once as a string and parse the JSON from that - some HttpContent
+        // implementations (a real network response chief among them) back a forward-only
+        // stream, so reading it a second time after ReadFromJsonAsync already consumed it
+        // silently returns empty content instead of the actual body.
+        var rawResponse = await response.Content.ReadAsStringAsync(cancellationToken);
+
         ProblemDetail? problem = null;
 
         try
         {
-            problem = await response.Content.ReadFromJsonAsync<ProblemDetail>(
-                JsonOptions,
-                cancellationToken);
+            problem = JsonSerializer.Deserialize<ProblemDetail>(rawResponse, JsonOptions);
         }
         catch (JsonException)
         {
             // Fall back to the raw response below.
         }
-
-        var rawResponse = await response.Content.ReadAsStringAsync(cancellationToken);
 
         throw new SkodaClientException(
             problem?.Detail ?? problem?.Title ?? $"Škoda API request failed with status code {(int)response.StatusCode}.",

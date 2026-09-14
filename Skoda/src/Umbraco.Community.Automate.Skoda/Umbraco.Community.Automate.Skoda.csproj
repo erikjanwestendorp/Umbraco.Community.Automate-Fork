@@ -14,4 +14,8 @@
 	  <ProjectReference Include="..\Umbraco.Community.Automate.Skoda.Assets\Umbraco.Community.Automate.Skoda.Assets.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="Umbraco.Community.Automate.Skoda.Tests" />
+	</ItemGroup>
+
 </Project>
