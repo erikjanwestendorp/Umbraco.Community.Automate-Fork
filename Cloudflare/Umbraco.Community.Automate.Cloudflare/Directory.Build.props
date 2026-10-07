@@ -1,0 +1,22 @@
+<Project>
+  <PropertyGroup>
+    <Authors>Erik-Jan Westendorp, Umbraco Community</Authors>
+    <PackageProjectUrl>https://github.com/umbraco-community/Umbraco.Community.Automate/tree/main/Cloudflare/Umbraco.Community.Automate.Cloudflare</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/umbraco-community/Umbraco.Community.Automate</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Releases are tagged cloudflare-v17.0.2 etc. Height is ignored because in the monorepo it
+         would count other packages' commits. -->
+    <MinVerTagPrefix>cloudflare-v</MinVerTagPrefix>
+    <MinVerIgnoreHeight>true</MinVerIgnoreHeight>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+</Project>

@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/Cloudflare/">
+    <Project Path="Cloudflare/Umbraco.Community.Automate.Cloudflare.Tests/Umbraco.Community.Automate.Cloudflare.Tests.csproj" />
+    <Project Path="Cloudflare/Umbraco.Community.Automate.Cloudflare/Umbraco.Community.Automate.Cloudflare.csproj" />
+  </Folder>
   <Folder Name="/DevTo/">
     <Project Path="DevTo/Umbraco.Community.Automate.DevTo.Tests/Umbraco.Community.Automate.DevTo.Tests.csproj" />
     <Project Path="DevTo/Umbraco.Community.Automate.DevTo/Umbraco.Community.Automate.DevTo.csproj" />

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>Umbraco Community Automate Cloudflare</Title>
+    <Description>Cloudflare connection type and action for Umbraco Automate. Lets you purge URLs from the Cloudflare cache as part of an automation workflow.</Description>
+    <PackageTags>umbraco automate automation cloudflare cache cdn umbraco-marketplace</PackageTags>
+    <PackageIcon>community-automate-128.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Umbraco.Automate.Core" />
+    <PackageReference Include="Umbraco.Cms.Core" />
+    <!-- Versions the package from the cloudflare-v* tag; see Directory.Build.props. -->
+    <PackageReference Include="MinVer" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+    <None Include="community-automate-128.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>
